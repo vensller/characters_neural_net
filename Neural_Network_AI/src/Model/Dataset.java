@@ -27,4 +27,13 @@ public class Dataset {
 
         return result;
     }
+
+    public double[][] getOutputsMatrix(){
+        double[][] result = new double[inputs.size()][10];
+
+        for (DatasetInput input : inputs)
+            result[inputs.indexOf(input)] = input.getValue();
+
+        return result;
+    }
 }

@@ -22,7 +22,7 @@ public class DatasetReader {
             while ((str = reader.readLine()) != null){
                 String[] arrayStr = str.split(" ");
                 double[] input = new double[256];
-                int[] value = new int[10];
+                double[] value = new double[10];
 
 
                 for (int x = 0; x < arrayStr.length; x++){

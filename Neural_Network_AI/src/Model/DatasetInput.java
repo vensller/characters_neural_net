@@ -3,9 +3,9 @@ package Model;
 public class DatasetInput {
 
     private double input[];
-    private int[] value;
+    private double[] value;
 
-    public DatasetInput(double[] input, int[] value) {
+    public DatasetInput(double[] input, double[] value) {
         this.input = input;
         this.value = value;
     }
@@ -18,11 +18,11 @@ public class DatasetInput {
         this.input = input;
     }
 
-    public int[] getValue() {
+    public double[] getValue() {
         return value;
     }
 
-    public void setValue(int[] value) {
+    public void setValue(double[] value) {
         this.value = value;
     }
 }
