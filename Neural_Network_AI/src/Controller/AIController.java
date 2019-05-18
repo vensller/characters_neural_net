@@ -20,15 +20,10 @@ public class AIController {
     private BasicNetwork network;
 
 
-    public void readDataSet(String archive){
+    public boolean readDataSet(String archive){
         dataset = DatasetReader.readDataset(archive);
 
-        if (dataset == null)
-            JOptionPane.showMessageDialog(null, "Erro ao importar o dataset, favor verifique o arquivo!");
-        else {
-            JOptionPane.showMessageDialog(null, "Dataset importado com sucesso! Rede neural será treinada neste momento, aguarde...");
-            trainNeuralNetwork();
-        }
+        return dataset != null;
     }
 
     public void findNumber(boolean[][] selected){
@@ -52,17 +47,17 @@ public class AIController {
         }else JOptionPane.showMessageDialog(null, "Rede neural não foi treinada, favor verificar o dataset selecionado!");
     }
 
-    private void trainNeuralNetwork(){
+    public void trainNeuralNetwork(int index){
         network = new BasicNetwork();
 
         network.addLayer(new BasicLayer(null, true, 256));
-        network.addLayer(new BasicLayer(new ActivationLOG(), true, 16));
+        network.addLayer(new BasicLayer(new ActivationLOG(), true, 100));
         network.addLayer(new BasicLayer(new ActivationLOG(), false, 10));
 
         network.getStructure().finalizeStructure();
         network.reset();
 
-        MLDataSet traineeData = new BasicMLDataSet(dataset.getInputsMatrix(), dataset.getOutputsMatrix());
+        MLDataSet traineeData = new BasicMLDataSet(dataset.getInputsMatrix(index), dataset.getOutputsMatrix(index));
 
         final Backpropagation trainee = new Backpropagation(network, traineeData);
 
@@ -76,8 +71,12 @@ public class AIController {
 
         trainee.finishTraining();
 
-        JOptionPane.showMessageDialog(null, "Foram executadas " + count + " épocas e a rede chegou a um erro de " + trainee.getError());
+        System.out.println("Foram executadas " + count + " épocas e a rede chegou a um erro de " + trainee.getError());
         Encog.getInstance().shutdown();
+    }
+
+    public void testNeuralNetwork(int index){
+
     }
 
 }

@@ -43,6 +43,8 @@ public class DatasetReader {
             dataset = null;
         }
 
+        if (dataset != null)
+            dataset.createSubsets();
 
         return dataset;
     }

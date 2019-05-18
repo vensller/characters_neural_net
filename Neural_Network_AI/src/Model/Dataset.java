@@ -6,33 +6,84 @@ import java.util.List;
 public class Dataset {
 
     private List<DatasetInput> inputs;
+    private List<List<DatasetInput>> subsets;
 
     public Dataset(){
         inputs = new ArrayList<>();
+        subsets = new ArrayList<>();
     }
 
     public void addInput(DatasetInput input){
         inputs.add(input);
     }
 
-    public List<DatasetInput> getInputs() {
-        return inputs;
+    public void createSubsets(){
+        int[] examples = new int[10];
+
+        for (int x = 0; x < examples.length; x++){
+            for (DatasetInput input : inputs)
+                if (input.getDecimalValue() == x)
+                    examples[x]++;
+
+            int exampleSize = examples[x] / 5;
+            int count = 0;
+            int index = 0;
+
+            for (DatasetInput input : inputs){
+                if (input.getDecimalValue() == x){
+                    subsets.get(index).add(input);
+
+                    if (count == exampleSize) {
+                        count = 0;
+
+                        if (index < 5)
+                            index++;
+
+                    }else count++;
+                }
+            }
+        }
     }
 
-    public double[][] getInputsMatrix(){
-        double[][] result = new double[inputs.size()][256];
+    public double[][] getInputsMatrix(int testIndex){
+        List<double[]> result = new ArrayList<>();
 
-        for (DatasetInput input : inputs)
-            result[inputs.indexOf(input)] = input.getInput();
+        for (List<DatasetInput> list : subsets) {
+            if (subsets.indexOf(list) != testIndex)
+                for (DatasetInput input : subsets.get(subsets.indexOf(list)))
+                    result.add(input.getInput());
+        }
 
-        return result;
+        double[][] resultMatrix = new double[result.size()][256];
+
+        for (double[] vec : result)
+            resultMatrix[result.indexOf(vec)] = vec;
+
+        return resultMatrix;
     }
 
-    public double[][] getOutputsMatrix(){
-        double[][] result = new double[inputs.size()][10];
+    public double[][] getOutputsMatrix(int testIndex){
+        List<double[]> result = new ArrayList<>();
 
-        for (DatasetInput input : inputs)
-            result[inputs.indexOf(input)] = input.getValue();
+        for (List<DatasetInput> list : subsets) {
+            if (subsets.indexOf(list) != testIndex)
+                for (DatasetInput input : subsets.get(subsets.indexOf(list)))
+                    result.add(input.getValue());
+        }
+
+        double[][] resultMatrix = new double[result.size()][10];
+
+        for (double[] vec : result)
+            resultMatrix[result.indexOf(vec)] = vec;
+
+        return resultMatrix;
+    }
+
+    public double[][] getTestOutput(int testIndex){
+        double[][] result = new double[subsets.get(testIndex).size()][10];
+
+        for (DatasetInput input : subsets.get(testIndex))
+            result[subsets.get(testIndex).indexOf(input)] = input.getValue();
 
         return result;
     }
