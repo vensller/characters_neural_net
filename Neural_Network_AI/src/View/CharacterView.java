@@ -1,7 +1,6 @@
 package View;
 
 import Controller.AIController;
-import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -50,7 +49,7 @@ public class CharacterView extends JFrame {
                 if (retorno == JFileChooser.APPROVE_OPTION){
                     if (controller.readDataSet(fileChooser.getSelectedFile().getAbsolutePath())) {
                         JOptionPane.showMessageDialog(null, "Dataset importado com sucesso! Rede neural será treinada neste momento, aguarde...");
-                        controller.trainNeuralNetwork();
+                        controller.trainNeuralNetwork(1);
                     }
                     else JOptionPane.showMessageDialog(null, "Erro ao importar o dataset, favor verifique o arquivo!");
                 }

@@ -1,0 +1,5 @@
+Test Index: 0. Accuracy: 0.8487654320987654
+Test Index: 1. Accuracy: 0.8672839506172839
+Test Index: 2. Accuracy: 0.8641975308641975
+Test Index: 3. Accuracy: 0.8641975308641975
+Test Index: 4. Accuracy: 0.8249158249158249

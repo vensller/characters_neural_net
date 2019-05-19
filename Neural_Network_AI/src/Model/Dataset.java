@@ -11,6 +11,11 @@ public class Dataset {
     public Dataset(){
         inputs = new ArrayList<>();
         subsets = new ArrayList<>();
+        subsets.add(new ArrayList<>());
+        subsets.add(new ArrayList<>());
+        subsets.add(new ArrayList<>());
+        subsets.add(new ArrayList<>());
+        subsets.add(new ArrayList<>());
     }
 
     public void addInput(DatasetInput input){
@@ -84,6 +89,15 @@ public class Dataset {
 
         for (DatasetInput input : subsets.get(testIndex))
             result[subsets.get(testIndex).indexOf(input)] = input.getValue();
+
+        return result;
+    }
+
+    public double[][] getTestInput(int testIndex){
+        double[][] result = new double[subsets.get(testIndex).size()][256];
+
+        for (DatasetInput input : subsets.get(testIndex))
+            result[subsets.get(testIndex).indexOf(input)] = input.getInput();
 
         return result;
     }
